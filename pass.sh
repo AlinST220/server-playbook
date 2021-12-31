@@ -2,7 +2,7 @@
 
 # Keychain query fields.
 # LABEL is the value you put for "Keychain Item Name" in Keychain.app.
-LABEL="ansible-vault-password"
+#LABEL="ansible-vault-password"
 ACCOUNT_NAME="alin"
 
 /usr/bin/security find-generic-password -w -a "$ACCOUNT_NAME" -l "$LABEL"
