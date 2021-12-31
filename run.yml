@@ -1,5 +1,5 @@
 ---
-- hosts: home
+- hosts: box
   gather_facts: no
 
   pre_tasks:
@@ -7,7 +7,7 @@
       tags:
         - port
 
-- hosts: home
+- hosts: box
   tasks:
     - import_tasks: tasks/user.yml
       tags:
@@ -15,7 +15,7 @@
 
 
 # PiHole/IKEv2 server
-- hosts: coda
+- hosts: box
   become: yes
   roles:
     - role: essential
@@ -77,7 +77,7 @@
 
 
 # Home server/NAS
-- hosts: fragile
+- hosts: box
   become: yes
 
   pre_tasks:
