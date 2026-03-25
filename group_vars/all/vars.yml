@@ -23,7 +23,7 @@ fish_prompt_color: blue
 
 keyboard_layout: us
 
-username: alin
+username: "{{ vault_username }}"
 
 guid: "1000"
 
@@ -55,7 +55,7 @@ apt_mirror: http://ftp.uni-mainz.de/ubuntu/
 # Email credentials (for SMART and Snapraid error reporting)
 #
 
-email: alin.stoica@gmail.com
+email: "{{ vault_email }}"
 
 email_login: "{{ email }}"
 
@@ -323,6 +323,9 @@ smartd_default_mail_recipients: [ "{{ email }}" ]
 
 #
 # Secret variables (encrypt with ansible-vault)
+# Required vault variables: vault_email, vault_username, email_password,
+#   mysql_root_password, mysql_password, password, password2,
+#   fallback_ssh_password (for ssh_juggle_port fallback)
 #
 duckdns_token: ""
 

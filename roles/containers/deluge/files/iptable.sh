@@ -55,13 +55,14 @@ default_gateway=$(ip route show default | awk '/default/ {print $3}')
 echo "[info] Default route for container is ${default_gateway}"
 
 # identify ip for docker bridge interface
-docker_ip=$(ifconfig "${docker_interface}" | grep -P -o -m 1 '(?<=inet\s)[^\s]+')
+docker_ip=$(ip -4 addr show "${docker_interface}" | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -1)
 if [[ "${DEBUG}" == "true" ]]; then
 	echo "[debug] Docker IP defined as ${docker_ip}"
 fi
 
-# identify netmask for docker bridge interface
-docker_mask=$(ifconfig "${docker_interface}" | grep -P -o -m 1 '(?<=netmask\s)[^\s]+')
+# identify prefix length and convert to dotted-quad netmask for docker bridge interface
+docker_prefix=$(ip -4 addr show "${docker_interface}" | grep -oP '(?<=inet\s)\d+(\.\d+){3}/\K\d+' | head -1)
+docker_mask=$(python3 -c "import ipaddress; print(ipaddress.IPv4Network('0.0.0.0/${docker_prefix}', strict=False).netmask)")
 if [[ "${DEBUG}" == "true" ]]; then
 	echo "[debug] Docker netmask defined as ${docker_mask}"
 fi
